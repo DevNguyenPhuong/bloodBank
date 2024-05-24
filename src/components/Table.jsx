@@ -1,58 +1,36 @@
-import { HiOutlineX } from "react-icons/hi";
-import { HiCheck } from "react-icons/hi2";
-import Modal from "./Modal";
-import { useState } from "react";
-import FormApprove from "./FormApprove";
+import { useGetDonorByAcitivities } from "../features/hospital/useGetDonorByActivities";
+import TableRow from "./TableRow";
 
-function Table({ showAction }) {
-  const [IsOpenModal, setIsOpenModal] = useState(false);
+function Table({ showAction, activityId }) {
+  const { donors, isLoading } = useGetDonorByAcitivities(activityId);
+
+  if (isLoading)
+    return <div className="text-center min-w-[600px] ">Loading...</div>;
+  const donorsList = donors?.data;
+
+  if (donorsList.length === 0)
+    return <div className="text-center min-w-[600px] ">Không có người nào</div>;
 
   return (
-    <>
-      <table className="border-collapse shadow-[rgba(0,0,0,0.24)_0px_3px_8px] min-w-[800px] ">
-        <tbody>
-          <tr>
-            <th>Tên</th>
-            <th>Tuổi</th>
-            <th>Nhóm máu</th>
-            <th>Số điện thoại</th>
-            <th>Địa chỉ</th>
-            {showAction && <th>Hành động</th>}
-          </tr>
-
-          <tr>
-            <td>bệnh viện huyết học</td>
-            <td>18</td>
-            <td>A+</td>
-            <td>021346586</td>
-            <td>21/5/2023</td>
-            {showAction && (
-              <td>
-                <div className="flex gap-4 justify-center items-center text-xl font-bold">
-                  <button
-                    className="text-md font-bold bg-red-500 text-white cursor-pointer  px-6 py-1 rounded-md border-none hover:bg-red-600 transition-all duration-300"
-                    onClick={() => {
-                      setIsOpenModal(!IsOpenModal);
-                    }}
-                  >
-                    <HiCheck />
-                  </button>
-                  <button className="text-md font-bold bg-red-500 text-white cursor-pointer  px-6 py-1 rounded-md border-none hover:bg-red-600 transition-all duration-300">
-                    <HiOutlineX />
-                  </button>
-                </div>
-              </td>
-            )}
-          </tr>
-        </tbody>
-      </table>
-
-      {IsOpenModal && (
-        <Modal onClose={() => setIsOpenModal(false)}>
-          <FormApprove onCloseModal={() => setIsOpenModal(false)} />
-        </Modal>
-      )}
-    </>
+    <table className="border-collapse shadow-[rgba(0,0,0,0.24)_0px_3px_8px] min-w-[600px] ">
+      <tbody>
+        <tr>
+          <th>Tên</th>
+          <th>Nhóm máu</th>
+          <th>Số điện thoại</th>
+          {showAction ? <th>Hành động</th> : null}
+        </tr>
+        {donorsList.map((item, index) => {
+          return (
+            <TableRow
+              key={item?.donorId}
+              {...item}
+              showActionState={showAction}
+            />
+          );
+        })}
+      </tbody>
+    </table>
   );
 }
 

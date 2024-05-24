@@ -15,6 +15,7 @@ import RequiredDonation from "./pages/Hospital/RequiredDonation";
 import HospitalActivities from "./pages/Hospital/HospitalActivities";
 import HomePage from "./pages/HomePage";
 import LoginLayout from "./pages/LoginLayout";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -30,14 +31,28 @@ function App() {
       <ReactQueryDevtools initialIsOpen={false} />
       <BrowserRouter>
         <Routes>
-          <Route path="/user" element={<UserLayout />}>
+          <Route
+            path="/user"
+            element={
+              <ProtectedRoute role="user">
+                <UserLayout />
+              </ProtectedRoute>
+            }
+          >
             <Route index element={<Navigate replace to="home" />} />
             <Route path="activities" element={<Activities />} />
             <Route path="history" element={<History />} />
             <Route path="home" element={<UserHome />} />
           </Route>
 
-          <Route path="/hospital" element={<HospitalLayout />}>
+          <Route
+            path="/hospital"
+            element={
+              <ProtectedRoute role="hospital">
+                <HospitalLayout />
+              </ProtectedRoute>
+            }
+          >
             <Route index element={<Navigate replace to="home" />} />
             <Route path="activities" element={<DonateActivities />} />
             <Route path="hospitalactivities" element={<HospitalActivities />} />

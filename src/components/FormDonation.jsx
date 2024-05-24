@@ -6,7 +6,7 @@ function FormDonation() {
       action=""
     >
       <div className="flex items-center h-14 ">
-        <label className="w-32" for="dName">
+        <label className="w-32" htmlFor="dName">
           Họ và Tên
         </label>
         <input
@@ -17,7 +17,7 @@ function FormDonation() {
         />
       </div>
       <div className="flex items-center h-14 ">
-        <label className="w-32" for="bloodGroup">
+        <label className="w-32" htmlFor="bloodGroup">
           Nhóm máu
         </label>
         <select
@@ -37,7 +37,7 @@ function FormDonation() {
         </select>
       </div>
       <div className="flex items-center h-14 ">
-        <label className="w-32" for="ml">
+        <label className="w-32" htmlFor="ml">
           Đơn vị máu
         </label>
         <input
@@ -48,7 +48,7 @@ function FormDonation() {
         />
       </div>
       <div className="flex items-center h-14 ">
-        <label className="w-32" for="address">
+        <label className="w-32" htmlFor="address">
           Địa chỉ
         </label>
         <input

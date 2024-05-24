@@ -1,9 +1,9 @@
 import { format } from "date-fns";
-import { useHospital } from "../features/hospital/useHospital";
+import { useHospital } from "../hospital/useHospital";
 import { useSelector } from "react-redux";
-import { useBookingActivity } from "../features/users/useBookingActivity";
+import { useBookingActivity } from "./useBookingActivity";
 
-function ActivityItem({
+function UserHomeAcitivyItem({
   id,
   hospitalId,
   dateActivity,
@@ -11,9 +11,6 @@ function ActivityItem({
   quantity,
   operatingHour,
   activityType,
-  btnText,
-  onOpenModal = null,
-  isDeleteAble = false,
 }) {
   const { hospital: hospitalInfo } = useHospital(hospitalId);
   const formattedDate = format(new Date(dateActivity), "dd/MM/yyyy");
@@ -73,17 +70,10 @@ function ActivityItem({
             <button
               className="text-l font-bold bg-red-500 text-white cursor-pointer mt-5 px-6 py-2 rounded-md border-none hover:bg-red-600 transition-all duration-300 "
               onClick={() => handleBooking(userId, id, 0)}
+              disabled={isLoading}
             >
-              {btnText}
+              Đặt lịch
             </button>
-            {isDeleteAble && (
-              <button
-                className="text-l font-bold bg-red-500 text-white cursor-pointer  px-6 py-2 rounded-md border-none hover:bg-red-600 transition-all duration-300 "
-                // onClick={onOpenModal}
-              >
-                Xoá
-              </button>
-            )}
           </div>
         </div>
       </div>
@@ -91,4 +81,4 @@ function ActivityItem({
   );
 }
 
-export default ActivityItem;
+export default UserHomeAcitivyItem;

@@ -1,16 +1,17 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useLogin } from "../hooks/UseLogin";
+import { useLogin } from "../features/authentication/useLogin";
+import { ROLE } from "../utils/constant";
 
 function Login() {
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
-  const [userPass, setUserPass] = useState("");
+  const [password, setPassword] = useState("");
   const { login, isLoading } = useLogin();
 
-  function handleLogin(e) {
+  function handleLogin(e, role) {
     e.preventDefault();
-    login({ userName, userPass });
+    login({ userName, password, role });
   }
 
   return (
@@ -38,13 +39,13 @@ function Login() {
         </label>
         <input
           className="p-2 w-72 shadow-[rgba(0,0,0,0.24)_0px_3px_8px]"
-          type="text"
+          type="password"
           id="ml"
           name="ml"
           placeholder="Nhập mật khẩu"
           required
-          value={userPass}
-          onChange={(e) => setUserPass(e.target.value)}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           disabled={isLoading}
         />
       </div>
@@ -52,7 +53,13 @@ function Login() {
       <div className="btn-donor flex justify-end gap-6">
         <button
           className="text-l font-bold bg-red-500 text-white cursor-pointer mt-5 px-6 py-2 rounded-md border-none hover:bg-red-600 transition-all duration-300 "
-          onClick={handleLogin}
+          onClick={(e) => handleLogin(e, ROLE.hospital)}
+        >
+          Đăng nhập (bệnh viện)
+        </button>
+        <button
+          className="text-l font-bold bg-red-500 text-white cursor-pointer mt-5 px-6 py-2 rounded-md border-none hover:bg-red-600 transition-all duration-300 "
+          onClick={(e) => handleLogin(e, ROLE.user)}
         >
           Đăng nhập
         </button>

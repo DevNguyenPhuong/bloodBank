@@ -1,28 +1,39 @@
 import { useState } from "react";
-import ActivityItem from "../../components/ActivityItem";
 import Modal from "../../components/Modal";
 import Table from "../../components/Table";
+import { useSelector } from "react-redux";
+import { useGetAcitivitiesByHospitalId } from "../../features/hospital/useGetAcitivitiesByHospitalId";
+import HospitalAcitivityItem from "../../features/hospital/HospitalAcitivityItem";
 
 function HospitalActivities() {
   const [IsOpenModal, setIsOpenModal] = useState(false);
+  const [activityId, setActivityId] = useState("");
+  const { userId } = useSelector((store) => store.user);
+  const { hospitalActivities, isLoading } =
+    useGetAcitivitiesByHospitalId(userId);
+
+  if (isLoading) return <div>Loading...</div>;
+
+  function handleModal(activityIdx) {
+    setIsOpenModal(!IsOpenModal);
+    setActivityId(activityIdx);
+  }
+
   return (
     <div className="w-full">
       <div className="mt-12 items-center flex flex-col gap-5">
-        <ActivityItem
-          activityType={"hospital"}
-          btnText={"Xem danh sách"}
-          onOpenModal={() => setIsOpenModal(true)}
-        />
-        <ActivityItem
-          activityType={"hospital"}
-          btnText={"Xem danh sách"}
-          onOpenModal={() => setIsOpenModal(true)}
-        />
+        {hospitalActivities.map((item, index) => (
+          <HospitalAcitivityItem
+            {...item}
+            key={item.id}
+            onOpenModal={handleModal}
+          />
+        ))}
       </div>
 
       {IsOpenModal && (
-        <Modal onClose={() => setIsOpenModal(false)}>
-          <Table showAction={true} onCloseModal={() => setIsOpenModal(false)} />
+        <Modal onClose={() => setIsOpenModal(!IsOpenModal)}>
+          <Table activityId={activityId} showAction={true} />
         </Modal>
       )}
     </div>

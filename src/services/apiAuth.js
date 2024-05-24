@@ -1,17 +1,14 @@
 import axios from "axios";
+import { BASE_URL } from "../utils/constant";
 
 export async function login(info) {
-  const data = await axios.post("https://localhost:7067/api/auth", info);
+  const data = await axios.post(`${BASE_URL}/api/auth`, info);
 
   return data;
 }
 
 export async function signup(info) {
-  const { data, error } = await axios.post(
-    "https://localhost:7067/api/donors",
-    info
-  );
+  const data = await axios.post(`${BASE_URL}/api/donors`, info);
 
-  if (error) throw new Error(error.message);
-  return data?.data;
+  return data;
 }

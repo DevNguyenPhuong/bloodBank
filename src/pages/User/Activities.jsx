@@ -1,13 +1,18 @@
-import ActivityItem from "../../components/ActivityItem";
+import { useGetActivities } from "../../features/users/useGetActivitiyById";
+import { useSelector } from "react-redux";
+import UserTakingActivityItem from "../../features/users/UserTakingAcitivityItem";
 
 function Activities() {
+  const { userId } = useSelector((store) => store.user);
+  const { activities: activitiesUser } = useGetActivities(userId);
+
+  console.log(activitiesUser?.data);
   return (
     <div className="w-full">
       <div className="mt-6 flex justify-center flex-col items-center gap-4">
-        <ActivityItem activityType={"user"} btnText={"Huỷ"} />
-        <ActivityItem activityType={"user"} btnText={"Huỷ"} />
-        <ActivityItem activityType={"user"} btnText={"Huỷ"} />
-        <ActivityItem activityType={"user"} btnText={"Huỷ"} />
+        {activitiesUser?.data?.map((item, index) => (
+          <UserTakingActivityItem {...item} key={item.id} />
+        ))}
       </div>
     </div>
   );

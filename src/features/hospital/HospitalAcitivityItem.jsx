@@ -1,9 +1,7 @@
 import { format } from "date-fns";
-import { useHospital } from "../features/hospital/useHospital";
-import { useSelector } from "react-redux";
-import { useBookingActivity } from "../features/users/useBookingActivity";
+import { useHospital } from "./useHospital";
 
-function ActivityItem({
+function HospitalAcitivityItem({
   id,
   hospitalId,
   dateActivity,
@@ -11,20 +9,12 @@ function ActivityItem({
   quantity,
   operatingHour,
   activityType,
-  btnText,
-  onOpenModal = null,
-  isDeleteAble = false,
+  onOpenModal,
 }) {
-  const { hospital: hospitalInfo } = useHospital(hospitalId);
+  const { hospital: hospitalData, isLoading } = useHospital(hospitalId);
+  if (isLoading) return <div>Loading...</div>;
+
   const formattedDate = format(new Date(dateActivity), "dd/MM/yyyy");
-
-  const { userId } = useSelector((store) => store.user);
-
-  function handleBooking(donorId, activityId, status) {
-    bookingActivity({ donorId, activityId, status });
-  }
-
-  const { bookingActivity, isLoading } = useBookingActivity();
 
   return (
     <div className="flex  gap-8 text-l leading-6 items-center w-3/4  shadow-[rgba(0,0,0,0.24)_0px_3px_8px]  p-[1.48em] rounded-lg">
@@ -39,10 +29,10 @@ function ActivityItem({
       <div className="w-full flex justify-between items-center  ">
         <div className="item-contex1">
           <h2 className="text-red-500 font-bold text-xl">
-            {hospitalInfo?.fullName}
+            {hospitalData?.fullName}
           </h2>
           <p>
-            Địa chỉ : <span>{hospitalInfo?.address}</span>
+            Địa chỉ : <span>{hospitalData?.address}</span>
           </p>
           <p>
             Thời gian hoạt động:
@@ -72,18 +62,10 @@ function ActivityItem({
           <div className="flex flex-col gap-4">
             <button
               className="text-l font-bold bg-red-500 text-white cursor-pointer mt-5 px-6 py-2 rounded-md border-none hover:bg-red-600 transition-all duration-300 "
-              onClick={() => handleBooking(userId, id, 0)}
+              onClick={() => onOpenModal(id)}
             >
-              {btnText}
+              Xem danh sách
             </button>
-            {isDeleteAble && (
-              <button
-                className="text-l font-bold bg-red-500 text-white cursor-pointer  px-6 py-2 rounded-md border-none hover:bg-red-600 transition-all duration-300 "
-                // onClick={onOpenModal}
-              >
-                Xoá
-              </button>
-            )}
           </div>
         </div>
       </div>
@@ -91,4 +73,4 @@ function ActivityItem({
   );
 }
 
-export default ActivityItem;
+export default HospitalAcitivityItem;
