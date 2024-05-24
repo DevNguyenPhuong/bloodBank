@@ -14,7 +14,7 @@ const hospitalSlice = createSlice({
   initialState,
   reducers: {
     setInfo(state, action) {
-      state = action.payload;
+      return action.payload;
     },
   },
 });

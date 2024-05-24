@@ -7,7 +7,12 @@ import FormApprove from "./FormApprove";
 function TableRow({ showActionState, donorId, activityId, id }) {
   const [IsOpenModal, setIsOpenModal] = useState(false);
   const { donor, isLoading } = useGetDonor(donorId);
-  if (isLoading) return <tr>Loading</tr>;
+  if (isLoading)
+    return (
+      <tr>
+        <td>Loading</td>
+      </tr>
+    );
 
   const { bloodType, fullName, phone } = donor;
 

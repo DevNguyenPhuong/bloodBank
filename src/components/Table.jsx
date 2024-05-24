@@ -8,7 +8,7 @@ function Table({ showAction, activityId }) {
     return <div className="text-center min-w-[600px] ">Loading...</div>;
   const donorsList = donors?.data;
 
-  if (donorsList.length === 0)
+  if (donorsList?.length === 0)
     return <div className="text-center min-w-[600px] ">Không có người nào</div>;
 
   return (
