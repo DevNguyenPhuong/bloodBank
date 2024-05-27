@@ -13,7 +13,7 @@ export function useLogin() {
     mutationFn: (data) => loginAPI(data),
 
     onSuccess: (result, payload) => {
-      queryClient.setQueryData(["user"], result.data);
+      queryClient.setQueryData(["user"], result?.data);
       toast.success(`Chào mừng ${result.data.fullName} `);
       console.log(result.data);
 
