@@ -1,21 +1,22 @@
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { useRequireBlood } from "../features/hospital/useRequireBlood";
+
 function FormDonation() {
+  const [bloodType, setBloodType] = useState("none");
+  const [quantity, setQuantity] = useState(300);
+  const { userId } = useSelector((store) => store.user);
+  const { requireBlood, isLoading } = useRequireBlood();
+  function onSubmit(e) {
+    e.preventDefault();
+
+    requireBlood({ hospitalId: userId, bloodType, quantity: +quantity });
+  }
   return (
     <form
       className="shadow-[rgba(0,0,0,0.24)_0px_3px_8px] p-10 font-bold rounded-lg  text-zinc-700 flex flex-col gap-6"
       id="requestForm"
-      action=""
     >
-      <div className="flex items-center h-14 ">
-        <label className="w-32" htmlFor="dName">
-          Họ và Tên
-        </label>
-        <input
-          className=" p-2 w-72 shadow-[rgba(0,0,0,0.24)_0px_3px_8px]"
-          type="text"
-          id="dName"
-          name="dName"
-        />
-      </div>
       <div className="flex items-center h-14 ">
         <label className="w-32" htmlFor="bloodGroup">
           Nhóm máu
@@ -24,8 +25,11 @@ function FormDonation() {
           className="text-red-500 p-2 w-72 shadow-[rgba(0,0,0,0.24)_0px_3px_8px]"
           id="bloodGroup"
           name="bloodGroup"
+          value={bloodType}
+          onChange={(e) => setBloodType(e.target.value)}
+          disabled={isLoading}
         >
-          <option value="">Chọn nhóm máu</option>
+          <option value="none">Không biết</option>
           <option value="A+">A+</option>
           <option value="A-">A-</option>
           <option value="B+">B+</option>
@@ -37,33 +41,32 @@ function FormDonation() {
         </select>
       </div>
       <div className="flex items-center h-14 ">
-        <label className="w-32" htmlFor="ml">
+        <label className="w-32" htmlFor="quantity">
           Đơn vị máu
         </label>
         <input
           className="p-2 w-72 shadow-[rgba(0,0,0,0.24)_0px_3px_8px]"
           type="text"
-          id="ml"
-          name="ml"
-        />
-      </div>
-      <div className="flex items-center h-14 ">
-        <label className="w-32" htmlFor="address">
-          Địa chỉ
-        </label>
-        <input
-          className="p-2 w-72 shadow-[rgba(0,0,0,0.24)_0px_3px_8px]"
-          type="text"
-          id="address"
-          name="address"
+          id="quantity"
+          name="quantity"
+          value={quantity}
+          onChange={(e) => setQuantity(e.target.value)}
+          disabled={isLoading}
         />
       </div>
 
       <div className="btn-donor flex justify-end gap-6">
-        <button className="text-l font-bold bg-red-500 text-white cursor-pointer mt-5 px-6 py-2 rounded-md border-none hover:bg-red-600 transition-all duration-300 ">
+        <button
+          className="text-l font-bold bg-red-500 text-white cursor-pointer mt-5 px-6 py-2 rounded-md border-none hover:bg-red-600 transition-all duration-300 "
+          disabled={isLoading}
+        >
           Huỷ
         </button>
-        <button className="text-l font-bold bg-red-500 text-white cursor-pointer mt-5 px-6 py-2 rounded-md border-none hover:bg-red-600 transition-all duration-300 ">
+        <button
+          className="text-l font-bold bg-red-500 text-white cursor-pointer mt-5 px-6 py-2 rounded-md border-none hover:bg-red-600 transition-all duration-300 "
+          onClick={onSubmit}
+          disabled={isLoading}
+        >
           Yêu cầu
         </button>
       </div>

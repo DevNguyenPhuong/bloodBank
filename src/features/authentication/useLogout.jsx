@@ -14,6 +14,7 @@ export function useLogout() {
     },
     onSuccess: () => {
       queryClient.removeQueries();
+      localStorage.removeItem("jwtToken");
       navigate("/", { replace: false });
     },
   });

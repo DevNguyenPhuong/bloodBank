@@ -16,7 +16,7 @@ services:
     volumes:
       - my-volume:/var/opt/mssql
   blood_bank:
-    image: ndhuy23/blood_bank:v4
+    image: ndhuy23/blood_bank:v5
     depends_on:
       - mssql
     environment:

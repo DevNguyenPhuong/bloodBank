@@ -8,16 +8,25 @@ function BookingZone() {
     new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
   );
 
-  const { getActivities } = useGetActivities();
+  const { refetch } = useGetActivities({
+    startDay: format(startDay, "yyyy-MM-dd"),
+    endDay: format(endDay, "yyyy-MM-dd"),
+    status: 0,
+  });
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    getActivities({
-      startDay: format(startDay, "yyyy-MM-dd"),
-      endDay: format(endDay, "yyyy-MM-dd"),
-      status: 0,
-    });
+    try {
+      await refetch({
+        startDay: format(startDay, "yyyy-MM-dd"),
+        endDay: format(endDay, "yyyy-MM-dd"),
+        status: 0,
+      });
+    } catch (error) {
+      console.error("Error fetching updated activities:", error);
+    }
   }
+
   return (
     <div className="w-full flex flex-col items-center justify-center pb-8 px-16 py-0 mt-16">
       <form className="flex flex-col justify-center items-center gap-3.5 bg-red-100 rounded-md px-12 py-6">

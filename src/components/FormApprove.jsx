@@ -4,12 +4,13 @@ import { useApproveDonor } from "../features/hospital/useApproveDonor";
 
 function FormApprove({ donorId, sessionId }) {
   const { jwtToken, userId, fullName } = useSelector((store) => store.user);
-  const [bloodType, setBloodType] = useState("none");
+  const [bloodType, setBloodType] = useState("A+");
   const [quantity, setQuantity] = useState(100);
 
   const { approveDonor, isLoading } = useApproveDonor();
 
   function handleSubmit(e) {
+    e.preventDefault();
     approveDonor({
       donorId,
       sessionId,
@@ -19,13 +20,8 @@ function FormApprove({ donorId, sessionId }) {
       hospitalId: userId,
       hospitalName: fullName,
     });
-
-    e.preventDefault();
   }
 
-  function handleCancel(e) {
-    e.preventDefault();
-  }
   return (
     <form
       className=" font-bold rounded-lg  text-zinc-700 flex flex-col gap-6"
@@ -43,7 +39,6 @@ function FormApprove({ donorId, sessionId }) {
           value={bloodType}
           onChange={(e) => setBloodType(e.target.value)}
         >
-          <option value="none">Chưa xác định</option>
           <option value="A+">A+</option>
           <option value="A-">A-</option>
           <option value="B+">B+</option>
@@ -89,7 +84,6 @@ function FormApprove({ donorId, sessionId }) {
         </button>
         <button
           className="text-l font-bold bg-red-500 text-white cursor-pointer mt-5 px-6 py-2 rounded-md border-none hover:bg-red-600 transition-all duration-300 "
-          onClick={handleCancel}
           disabled={isLoading}
         >
           Huỷ

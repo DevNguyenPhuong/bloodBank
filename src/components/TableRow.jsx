@@ -3,10 +3,14 @@ import { useGetDonor } from "../features/hospital/useGetDonor";
 import { useState } from "react";
 import Modal from "./Modal";
 import FormApprove from "./FormApprove";
+import { useRejectDonor } from "../features/hospital/useRejectDonor";
+import { useSelector } from "react-redux";
 
 function TableRow({ showActionState, donorId, activityId, id }) {
   const [IsOpenModal, setIsOpenModal] = useState(false);
   const { donor, isLoading } = useGetDonor(donorId);
+  const { rejectDonor, isLoading2 } = useRejectDonor();
+  const { jwtToken } = useSelector((store) => store.user);
   if (isLoading)
     return (
       <tr>
@@ -15,6 +19,10 @@ function TableRow({ showActionState, donorId, activityId, id }) {
     );
 
   const { bloodType, fullName, phone } = donor;
+
+  function handleCancel(data) {
+    rejectDonor(data);
+  }
 
   return (
     <>
@@ -31,7 +39,11 @@ function TableRow({ showActionState, donorId, activityId, id }) {
               >
                 <HiCheck />
               </button>
-              <button className="text-md font-bold bg-red-500 text-white cursor-pointer  px-6 py-1 rounded-md border-none hover:bg-red-600 transition-all duration-300">
+              <button
+                className="text-md font-bold bg-red-500 text-white cursor-pointer  px-6 py-1 rounded-md border-none hover:bg-red-600 transition-all duration-300"
+                onClick={() => handleCancel({ jwtToken, sessionId: id })}
+                disabled={isLoading2}
+              >
                 <HiOutlineX />
               </button>
             </div>

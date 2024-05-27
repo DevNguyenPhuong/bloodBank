@@ -4,9 +4,18 @@ import UserTakingActivityItem from "../../features/users/UserTakingAcitivityItem
 
 function Activities() {
   const { userId } = useSelector((store) => store.user);
-  const { activities: activitiesUser } = useGetActivities(userId);
+  const { activities: activitiesUser, isLoading } = useGetActivities(userId);
 
-  console.log(activitiesUser?.data);
+  if (isLoading) return <div className="w-full">Đang tải danh sách</div>;
+
+  if (activitiesUser?.data.length === 0) {
+    return (
+      <div className="w-full text-center text-red-500 text-2xl font-bold mt-5">
+        Hoạt động trống
+      </div>
+    );
+  }
+
   return (
     <div className="w-full">
       <div className="mt-6 flex justify-center flex-col items-center gap-4">

@@ -1,5 +1,6 @@
 import { format } from "date-fns";
 import { useHospital } from "./useHospital";
+import { useDeleteActivity } from "./useDeleteActivity";
 
 function DonateActivityItem({
   id,
@@ -12,6 +13,13 @@ function DonateActivityItem({
   onOpenModal,
 }) {
   const { hospital: hospitalData, isLoading } = useHospital(hospitalId);
+
+  function handleDeleteActivity(activityId) {
+    deleteActivity(activityId);
+  }
+
+  const { deleteActivity, isLoading: isLoadingCancel } = useDeleteActivity();
+
   if (isLoading) return <div>Loading...</div>;
 
   const formattedDate = format(new Date(dateActivity), "dd/MM/yyyy");
@@ -65,6 +73,14 @@ function DonateActivityItem({
               onClick={() => onOpenModal(id)}
             >
               Xem danh sách
+            </button>
+
+            <button
+              className="text-l font-bold bg-red-500 text-white cursor-pointer  px-6 py-2 rounded-md border-none hover:bg-red-600 transition-all duration-300 "
+              onClick={() => handleDeleteActivity(id)}
+              disabled={isLoadingCancel}
+            >
+              Xoá
             </button>
           </div>
         </div>

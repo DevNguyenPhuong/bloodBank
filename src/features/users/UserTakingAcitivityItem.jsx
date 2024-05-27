@@ -1,11 +1,10 @@
 import { format } from "date-fns";
-import { useSelector } from "react-redux";
 import { useGetActivitiesUserById } from "./useGetActivitiesUserById";
+import { useCancelActivity } from "./useCancelActivity";
 
-function UserTakingActivityItem({ activityId }) {
-  function handlCancel(donorId, activityId, status) {}
+function UserTakingActivityItem({ id: sessionId, activityId }) {
   const { activityInfo, isLoading } = useGetActivitiesUserById(activityId);
-  const { userId } = useSelector((store) => store.user);
+  const { cancelActivity, isLoading: isLoadingCancel } = useCancelActivity();
 
   if (isLoading) return null;
 
@@ -17,6 +16,11 @@ function UserTakingActivityItem({ activityId }) {
     operatingHour,
     activityType,
   } = activityInfo;
+
+  function handleCancelActivity(sessionId) {
+    cancelActivity(sessionId);
+  }
+
   const hospitalData = activityInfo.data;
   const formattedDate = format(new Date(dateActivity), "dd/MM/yyyy");
 
@@ -66,7 +70,8 @@ function UserTakingActivityItem({ activityId }) {
           <div className="flex flex-col gap-4">
             <button
               className="text-l font-bold bg-red-500 text-white cursor-pointer mt-5 px-6 py-2 rounded-md border-none hover:bg-red-600 transition-all duration-300 "
-              onClick={() => handlCancel(userId, id, 0)}
+              onClick={() => handleCancelActivity(sessionId)}
+              disabled={isLoadingCancel}
             >
               Huỷ
             </button>

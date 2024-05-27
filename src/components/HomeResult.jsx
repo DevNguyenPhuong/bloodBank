@@ -4,7 +4,7 @@ import UserHomeAcitivyItem from "../features/users/UserHomeActivityItem";
 function HomeResult() {
   const { data: activities } = useQuery({
     queryKey: ["activities"],
-    staleTime: Infinity,
+    staleTime: 0,
   });
 
   return (

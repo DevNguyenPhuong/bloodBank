@@ -1,14 +1,26 @@
 import axios from "axios";
 import { PAGE_SIZE } from "../utils/constant";
 import { BASE_URL } from "../utils/constant";
+import { format } from "date-fns";
 
-export async function getActivities({ startDay, endDay, status }) {
-  // from=2024-06-01&to=2024-06-30
+function config() {
+  const config = {
+    headers: { Authorization: `Bearer ${localStorage.getItem("jwtToken")}` },
+  };
+  return config;
+}
+
+// không gửi token
+export async function getActivities({
+  startDay = format(new Date(), "yyyy-MM-dd"),
+  endDay = format(new Date(Date.now() + 24 * 60 * 60 * 1000), "yyyy-MM-dd"),
+  status = 0,
+} = {}) {
   const data = await axios.get(
     `${BASE_URL}/api/activities?from=${startDay}&to=${endDay}&pageSize=${PAGE_SIZE}&status=${status}`
   );
 
-  return data?.data;
+  return data?.data?.data;
 }
 
 export async function getActivitiesByUser(id) {
@@ -32,4 +44,8 @@ export async function bookingActivity(info) {
   const data = await axios.post(`${BASE_URL}/api/sessiondonors`, info);
 
   return data?.data;
+}
+
+export async function cancelActivity(id) {
+  await axios.delete(`${BASE_URL}/api/sessiondonors/${id}`);
 }

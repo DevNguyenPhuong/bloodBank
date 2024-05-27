@@ -1,14 +1,15 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { getActivities as getActivitiesApi } from "../../services/apiUser";
 
-export function useGetActivities() {
-  const queryClient = useQueryClient();
-  const { mutate: getActivities, isLoading } = useMutation({
-    mutationFn: (data) => getActivitiesApi(data),
-
-    onSuccess: (result) => {
-      queryClient.setQueryData(["activities"], result.data);
-    },
+export function useGetActivities(info) {
+  const {
+    data: activities,
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryFn: () => getActivitiesApi(info),
+    queryKey: ["activities"],
   });
-  return { getActivities, isLoading };
+
+  return { activities, isLoading, refetch };
 }

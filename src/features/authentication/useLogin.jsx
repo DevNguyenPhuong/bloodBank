@@ -15,10 +15,15 @@ export function useLogin() {
     onSuccess: (result, payload) => {
       queryClient.setQueryData(["user"], result.data);
       toast.success(`Chào mừng ${result.data.fullName} `);
+      console.log(result.data);
 
+      const { jwtToken } = result?.data;
       dispatch(
         setInfo({ ...result.data, isAuthenticated: true, roleId: payload.role })
       );
+
+      localStorage.setItem("jwtToken", jwtToken);
+
       if (payload.role === 0) navigate("/user/home", { replace: true });
       else navigate("/hospital/home", { replace: true });
     },
