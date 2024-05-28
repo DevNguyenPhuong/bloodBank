@@ -8,7 +8,7 @@ import { NavLink } from "react-router-dom";
 
 function HospitalNavigation() {
   return (
-    <div className="flex-[20rem] min-h-screen text-l text-red-500 bg-red-50 p-6  font-bold  shadow-[rgba(0,0,0,0.24)_0px_3px_8px]">
+    <div className="fixed flex-[20rem] min-h-screen text-l text-red-500 bg-red-50 p-6  font-bold  shadow-[rgba(0,0,0,0.24)_0px_3px_8px]">
       <ul className="flex flex-col gap-4 ">
         <li>
           <NavLink to="./home" className="nav-link flex gap-3 items-center ">

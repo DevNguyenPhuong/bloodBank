@@ -8,7 +8,9 @@ function UserLayout() {
       <UserHeader />
       <div className="flex pt-12">
         <UserNavigation />
+        <div className="ml-[300px]"></div>
         <Outlet />
+        
       </div>
     </>
   );

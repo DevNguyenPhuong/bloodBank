@@ -110,7 +110,7 @@ export async function getRequestBlood({ status = 0, page = 1 }) {
 
 export async function acceptRequestBlood({ requestedId, hospitalAccept }) {
   await axios.put(
-    `${BASE_URL}/api/requestbloods/request/${requestedId}`,
+    `${BASE_URL}/api/requestbloods/requests/${requestedId}`,
     {
       hospitalAccept,
       status: 1,
