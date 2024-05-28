@@ -9,8 +9,9 @@ function HospitalActivities() {
   const [IsOpenModal, setIsOpenModal] = useState(false);
   const [activityId, setActivityId] = useState("");
   const { userId } = useSelector((store) => store.user);
+  const status = 1;
   const { hospitalActivities, isLoading } =
-    useGetAcitivitiesByHospitalId(userId);
+    useGetAcitivitiesByHospitalId(userId,status);
 
   if (isLoading) return <div>Loading...</div>;
 

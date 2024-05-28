@@ -7,17 +7,14 @@ function RequesBloodItem({ id, hospitalId, quantity, bloodType }) {
 
   const { userId } = useSelector((store) => store.user);
   const { acceptRequestBlood, isLoading } = useAcceptRequestBlood();
-
-  if (isLoadinghospital) return <div>Loading...</div>;
-
   function handleAccept(requestedId, hospitalAccept) {
     acceptRequestBlood({ requestedId, hospitalAccept });
   }
-
+  //console.log(hospitalInfo);
   return (
-    <div className="flex  gap-8 text-l leading-6  shadow-[rgba(0,0,0,0.24)_0px_3px_8px]  px-8 py-4 rounded-lg ">
+    <div className="flex  gap-8 text-l leading-6  shadow-[rgba(0,0,0,0.24)_0px_3px_8px]  px-8 py-4 rounded-lg mt-6">
       <div className="flex  gap-16 items-center ">
-        <div className="item-contex1 ">
+        <div className="item-contex1 w-[500px]">
           <h2 className="text-red-500 font-bold text-xl">
             {hospitalInfo?.fullName}
           </h2>

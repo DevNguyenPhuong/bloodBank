@@ -8,7 +8,9 @@ function HospitalLayout() {
       <HospitalHeader />
       <div className="flex pt-12">
         <HospitalNavigation />
+        <div className="ml-[300px]"></div>
         <Outlet />
+        
       </div>
     </>
   );

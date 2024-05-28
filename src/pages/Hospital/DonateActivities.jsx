@@ -11,10 +11,11 @@ function DonateActivities() {
   const [IsOpenModalAddActivity, setIsOpenModalAddActivity] = useState(false);
   const [activityId, setActivityId] = useState("");
   const { userId } = useSelector((store) => store.user);
+  const status = 0;
   const { hospitalActivities, isLoading } =
-    useGetAcitivitiesByHospitalId(userId);
+    useGetAcitivitiesByHospitalId(userId, status);
   if (isLoading) return <div>Loading...</div>;
-
+  
   function handleModal(activityIdx) {
     setIsOpenModal(!IsOpenModal);
     setActivityId(activityIdx);

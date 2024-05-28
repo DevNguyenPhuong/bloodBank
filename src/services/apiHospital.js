@@ -10,14 +10,15 @@ function config() {
 
 export async function getHospitalById(id) {
   // id = edf8e49e-2797-4426-e6bd-08dc77c09d16
+  //console.log(id);
   const data = await axios.get(`${BASE_URL}/api/hospitals/${id}`, config());
 
   return data?.data.data;
 }
 
-export async function getAcitivitiesByHospitalId(id) {
+export async function getAcitivitiesByHospitalId(id, status) {
   const data = await axios.get(
-    `${BASE_URL}/api/activities/hospitals/${id}?status=0`,
+    `${BASE_URL}/api/activities/hospitals/${id}?status=${status}`,
     config()
   );
 
