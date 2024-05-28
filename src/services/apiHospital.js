@@ -10,6 +10,7 @@ function config() {
 
 export async function getHospitalById(id) {
   // id = edf8e49e-2797-4426-e6bd-08dc77c09d16
+  //console.log(id);
   const data = await axios.get(`${BASE_URL}/api/hospitals/${id}`, config());
 
   return data?.data.data;

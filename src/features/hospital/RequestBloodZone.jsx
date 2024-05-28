@@ -8,12 +8,12 @@ function RequestBloodZone() {
   });
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Không thể tải dữ liệu</div>;
-  console.log(requestBloods);
+  //console.log(requestBloods);
   if (requestBloods?.length === 0) return <div>Không có yêu cầu nào</div>;
   return (
-    <div className="self-start">
+    <div className="">
       {requestBloods.map((item, index) => (
-        <RequesBloodItem key={index.id} {...item} />
+        <RequesBloodItem key={item.id} {...item} />
       ))}
     </div>
   );
