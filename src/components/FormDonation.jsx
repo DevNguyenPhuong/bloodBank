@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useRequireBlood } from "../features/hospital/useRequireBlood";
 
 function FormDonation() {
-  const [bloodType, setBloodType] = useState("none");
+  const [bloodType, setBloodType] = useState("A+");
   const [quantity, setQuantity] = useState(300);
   const { userId } = useSelector((store) => store.user);
   const { requireBlood, isLoading } = useRequireBlood();
@@ -29,7 +29,6 @@ function FormDonation() {
           onChange={(e) => setBloodType(e.target.value)}
           disabled={isLoading}
         >
-          <option value="none">Không biết</option>
           <option value="A+">A+</option>
           <option value="A-">A-</option>
           <option value="B+">B+</option>
@@ -56,12 +55,6 @@ function FormDonation() {
       </div>
 
       <div className="btn-donor flex justify-end gap-6">
-        <button
-          className="text-l font-bold bg-red-500 text-white cursor-pointer mt-5 px-6 py-2 rounded-md border-none hover:bg-red-600 transition-all duration-300 "
-          disabled={isLoading}
-        >
-          Huỷ
-        </button>
         <button
           className="text-l font-bold bg-red-500 text-white cursor-pointer mt-5 px-6 py-2 rounded-md border-none hover:bg-red-600 transition-all duration-300 "
           onClick={onSubmit}

@@ -44,6 +44,16 @@ function HospitalNavigation() {
             <span>Yêu cầu máu</span>
           </NavLink>
         </li>
+
+        <li>
+          <NavLink
+            to="./requestsBlood"
+            className="nav-link flex gap-3 items-center"
+          >
+            <FaHandHoldingWater />
+            <span>Danh sách yêu cầu</span>
+          </NavLink>
+        </li>
       </ul>
     </div>
   );

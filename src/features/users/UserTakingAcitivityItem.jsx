@@ -3,10 +3,25 @@ import { useGetActivitiesUserById } from "./useGetActivitiesUserById";
 import { useCancelActivity } from "./useCancelActivity";
 
 function UserTakingActivityItem({ id: sessionId, activityId }) {
-  const { activityInfo, isLoading } = useGetActivitiesUserById(activityId);
+  const { activityInfo, isLoading, error } =
+    useGetActivitiesUserById(activityId);
   const { cancelActivity, isLoading: isLoadingCancel } = useCancelActivity();
 
-  if (isLoading) return null;
+  if (isLoading)
+    return (
+      <div className=" mt-16 px-16 w-full">
+        <div className=" flex flex-wrap gap-4 justify-center">Loading...</div>
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className=" mt-16 px-16 w-full">
+        <div className=" flex flex-wrap gap-4 justify-center">
+          Không thể tải dữ liệu
+        </div>
+      </div>
+    );
 
   const {
     id,

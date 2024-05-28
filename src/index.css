@@ -140,3 +140,7 @@ tr:nth-of-type(odd) {
   width: 100%;
   left: 0;
 }
+
+*:disabled {
+  cursor: not-allowed;
+}

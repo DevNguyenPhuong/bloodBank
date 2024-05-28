@@ -1,16 +1,18 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useApproveDonor } from "../features/hospital/useApproveDonor";
+import Modal from "./Modal";
+import ConfirmBox from "./ConfirmBox";
 
 function FormApprove({ donorId, sessionId }) {
   const { jwtToken, userId, fullName } = useSelector((store) => store.user);
   const [bloodType, setBloodType] = useState("A+");
   const [quantity, setQuantity] = useState(100);
+  const [IsOpenModal, setIsOpenModal] = useState(false);
 
   const { approveDonor, isLoading } = useApproveDonor();
 
-  function handleSubmit(e) {
-    e.preventDefault();
+  function handleConfirm() {
     approveDonor({
       donorId,
       sessionId,
@@ -20,6 +22,24 @@ function FormApprove({ donorId, sessionId }) {
       hospitalId: userId,
       hospitalName: fullName,
     });
+    setIsOpenModal(!IsOpenModal);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (bloodType === "A+") {
+      setIsOpenModal(!IsOpenModal);
+    } else {
+      approveDonor({
+        donorId,
+        sessionId,
+        jwtToken,
+        bloodType,
+        quantity: +quantity,
+        hospitalId: userId,
+        hospitalName: fullName,
+      });
+    }
   }
 
   return (
@@ -82,13 +102,15 @@ function FormApprove({ donorId, sessionId }) {
         >
           Gửi
         </button>
-        <button
-          className="text-l font-bold bg-red-500 text-white cursor-pointer mt-5 px-6 py-2 rounded-md border-none hover:bg-red-600 transition-all duration-300 "
-          disabled={isLoading}
-        >
-          Huỷ
-        </button>
       </div>
+      {IsOpenModal && (
+        <Modal onClose={() => setIsOpenModal(false)}>
+          <ConfirmBox
+            onConfirm={handleConfirm}
+            onClose={() => setIsOpenModal(false)}
+          />
+        </Modal>
+      )}
     </form>
   );
 }

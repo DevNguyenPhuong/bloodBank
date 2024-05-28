@@ -1,4 +1,33 @@
+import { useSelector } from "react-redux";
+import { useGetDonateHistory } from "../../features/users/useGetDonateHistory";
+import HistoryTableRow from "../../features/hospital/HistoryTableRow";
+
 function History() {
+  const { userId } = useSelector((store) => store.user);
+  const { histories, isLoading, error } = useGetDonateHistory(userId);
+  if (isLoading)
+    return (
+      <div className="w-full">
+        <div className="mt-16 flex justify-center">Loading...</div>
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="w-full">
+        <div className="mt-16 flex justify-center">Không thể tải dữ liệu</div>
+      </div>
+    );
+
+  if (histories?.length === 0)
+    return (
+      <div className="w-full">
+        <div className="mt-16 flex justify-center">
+          chưa tham gia hoạt động nào
+        </div>
+      </div>
+    );
+
   return (
     <div className="w-full">
       <div className="mt-16 flex justify-center">
@@ -6,28 +35,12 @@ function History() {
           <tbody>
             <tr>
               <th>Tên bệnh viện</th>
-              <th>Nhóm máu</th>
               <th>Ngày hiến máu</th>
               <th>Hiến (ml)</th>
             </tr>
-            <tr>
-              <td>bệnh viện huyết học</td>
-              <td>A+</td>
-              <td>21/5/2023</td>
-              <td>21</td>
-            </tr>
-            <tr>
-              <td>bệnh viện huyết học</td>
-              <td>A+</td>
-              <td>21/5/2023</td>
-              <td>21</td>
-            </tr>
-            <tr>
-              <td>bệnh viện huyết học</td>
-              <td>A+</td>
-              <td>21/5/2023</td>
-              <td>21</td>
-            </tr>
+            {histories.map((item, index) => (
+              <HistoryTableRow key={item.id} {...item} />
+            ))}
           </tbody>
         </table>
       </div>

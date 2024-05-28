@@ -2,6 +2,7 @@ import { format } from "date-fns";
 import { useHospital } from "../hospital/useHospital";
 import { useSelector } from "react-redux";
 import { useBookingActivity } from "./useBookingActivity";
+import { useNavigate } from "react-router-dom";
 
 function UserHomeAcitivyItem({
   id,
@@ -13,12 +14,17 @@ function UserHomeAcitivyItem({
   activityType,
 }) {
   const { hospital: hospitalInfo } = useHospital(hospitalId);
+  console.log(hospitalInfo);
   const formattedDate = format(new Date(dateActivity), "dd/MM/yyyy");
 
   const { userId } = useSelector((store) => store.user);
+  const navigate = useNavigate();
 
   function handleBooking(donorId, activityId, status) {
-    bookingActivity({ donorId, activityId, status });
+    if (!donorId) navigate("/login");
+    else {
+      bookingActivity({ donorId, activityId, status });
+    }
   }
 
   const { bookingActivity, isLoading } = useBookingActivity();

@@ -24,13 +24,16 @@ export async function getActivities({
 }
 
 export async function getActivitiesByUser(id) {
-  const data = await axios.get(`${BASE_URL}/api/sessiondonors/donors/${id}`);
+  const data = await axios.get(
+    `${BASE_URL}/api/sessiondonors/donors/${id}`,
+    config()
+  );
 
   return data?.data;
 }
 
 export async function getActivitiesById(id) {
-  const data = await axios.get(`${BASE_URL}/api/activities/${id}`);
+  const data = await axios.get(`${BASE_URL}/api/activities/${id}`, config());
   const hospitalId = data?.data?.data?.hospitalId;
 
   const hospitalData = await axios.get(
@@ -41,11 +44,23 @@ export async function getActivitiesById(id) {
 }
 
 export async function bookingActivity(info) {
-  const data = await axios.post(`${BASE_URL}/api/sessiondonors`, info);
+  const data = await axios.post(
+    `${BASE_URL}/api/sessiondonors`,
+    info,
+    config()
+  );
 
   return data?.data;
 }
 
 export async function cancelActivity(id) {
-  await axios.delete(`${BASE_URL}/api/sessiondonors/${id}`);
+  await axios.delete(`${BASE_URL}/api/sessiondonors/${id}`, config());
+}
+
+export async function getHistoryDonation(donorId) {
+  const data = await axios.get(
+    `${BASE_URL}/api/histories/donors/${donorId}`,
+    config()
+  );
+  return data?.data?.data;
 }
