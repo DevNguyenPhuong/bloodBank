@@ -8,7 +8,7 @@ export function useHospital(hospitalId) {
     error,
   } = useQuery({
     queryFn: () => getHospitalByIdAPI(hospitalId),
-    queryKey: ["hospital"],
+    queryKey: [`hospital ${hospitalId}`],
   });
 
   return { hospital, isLoading, error };

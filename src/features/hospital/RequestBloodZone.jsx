@@ -13,7 +13,7 @@ function RequestBloodZone() {
   return (
     <div className="self-start">
       {requestBloods.map((item, index) => (
-        <RequesBloodItem key={index.id} {...item} />
+        <RequesBloodItem key={item.id} {...item} />
       ))}
     </div>
   );

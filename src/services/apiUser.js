@@ -32,8 +32,11 @@ export async function getActivitiesByUser(id) {
   return data?.data;
 }
 
-export async function getActivitiesById(id) {
-  const data = await axios.get(`${BASE_URL}/api/activities/${id}`, config());
+export async function getActivitiesById({ id, status }) {
+  const data = await axios.get(
+    `${BASE_URL}/api/activities/${id}?status=${status}`,
+    config()
+  );
   const hospitalId = data?.data?.data?.hospitalId;
 
   const hospitalData = await axios.get(
