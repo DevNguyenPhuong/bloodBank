@@ -16,9 +16,9 @@ export async function getHospitalById(id) {
   return data?.data.data;
 }
 
-export async function getAcitivitiesByHospitalId(id) {
+export async function getAcitivitiesByHospitalId(id, status) {
   const data = await axios.get(
-    `${BASE_URL}/api/activities/hospitals/${id}?status=0`,
+    `${BASE_URL}/api/activities/hospitals/${id}?status=${status}`,
     config()
   );
 
