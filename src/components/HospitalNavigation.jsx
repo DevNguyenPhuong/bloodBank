@@ -1,8 +1,10 @@
 import {
+  FaClipboardList,
   FaFire,
   FaHandHoldingWater,
   FaHandsHelping,
   FaHome,
+  FaScroll,
 } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
@@ -50,8 +52,18 @@ function HospitalNavigation() {
             to="./requestsBlood"
             className="nav-link flex gap-3 items-center"
           >
-            <FaHandHoldingWater />
+            <FaClipboardList />
             <span>Danh sách yêu cầu</span>
+          </NavLink>
+        </li>
+
+        <li>
+          <NavLink
+            to="./requestHistory"
+            className="nav-link flex gap-3 items-center"
+          >
+            <FaScroll />
+            <span>Lịch sử yêu cầu</span>
           </NavLink>
         </li>
       </ul>

@@ -118,3 +118,11 @@ export async function acceptRequestBlood({ requestedId, hospitalAccept }) {
     config()
   );
 }
+
+export async function getRequestHistory({ hospitalId, page = 1 }) {
+  const { data } = await axios.get(
+    `${BASE_URL}/api/requestbloods/hospitals/${hospitalId}?page=${page}&pageSize=${PAGE_SIZE}`,
+    config()
+  );
+  return data?.data;
+}

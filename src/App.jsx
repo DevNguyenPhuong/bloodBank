@@ -17,6 +17,7 @@ import HomePage from "./pages/HomePage";
 import LoginLayout from "./pages/LoginLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import RequestBlood from "./pages/Hospital/RequestBlood";
+import RequestHistory from "./pages/Hospital/RequestHistory";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -59,6 +60,7 @@ function App() {
             <Route path="hospitalactivities" element={<HospitalActivities />} />
             <Route path="requireDonation" element={<RequiredDonation />} />
             <Route path="requestsBlood" element={<RequestBlood />} />
+            <Route path="requestHistory" element={<RequestHistory />} />
             <Route path="home" element={<HospitalHome />} />
           </Route>
 
