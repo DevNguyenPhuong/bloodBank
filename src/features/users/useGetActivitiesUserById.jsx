@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { getActivitiesById as getActivitiesByIdAPI } from "../../services/apiUser";
 
-export function useGetActivitiesUserById(id) {
+export function useGetActivitiesUserById(data) {
   const {
     data: activityInfo,
     isLoading,
     error,
   } = useQuery({
-    queryFn: () => getActivitiesByIdAPI(id),
+    queryFn: () => getActivitiesByIdAPI(data),
     queryKey: ["userActivityByid"],
   });
 

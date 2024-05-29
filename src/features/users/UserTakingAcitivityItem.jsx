@@ -3,8 +3,10 @@ import { useGetActivitiesUserById } from "./useGetActivitiesUserById";
 import { useCancelActivity } from "./useCancelActivity";
 
 function UserTakingActivityItem({ id: sessionId, activityId }) {
-  const { activityInfo, isLoading, error } =
-    useGetActivitiesUserById(activityId);
+  const { activityInfo, isLoading, error } = useGetActivitiesUserById({
+    id: activityId,
+    status: 0,
+  });
   const { cancelActivity, isLoading: isLoadingCancel } = useCancelActivity();
 
   if (isLoading)
