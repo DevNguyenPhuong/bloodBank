@@ -10,10 +10,19 @@ function HospitalActivities() {
   const [activityId, setActivityId] = useState("");
   const { userId } = useSelector((store) => store.user);
   const status = 1;
-  const { hospitalActivities, isLoading } =
-    useGetAcitivitiesByHospitalId(userId,status);
+  const { hospitalActivities, isLoading } = useGetAcitivitiesByHospitalId(
+    userId,
+    status
+  );
 
   if (isLoading) return <div>Loading...</div>;
+
+  if (hospitalActivities?.length === 0)
+    return (
+      <div className="mt-12 items-center flex flex-col gap-5">
+        Không có hoạt động nào đang diễn ra
+      </div>
+    );
 
   function handleModal(activityIdx) {
     setIsOpenModal(!IsOpenModal);
