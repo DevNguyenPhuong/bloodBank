@@ -10,7 +10,7 @@ function FormAddActivities({ onClose, hospitalId }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const outputDate = format(startDay, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    const outputDate = format(startDay, "yyyy-MM-dd'T'00:00:00.000'Z'");
 
     createActivity({
       dateActivity: outputDate,
